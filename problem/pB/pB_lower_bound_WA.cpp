@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <vector>
 #include <map>
-#include <cassert>
 #define LL long long
 #define PLL pair<LL, LL>
 const int MAXN = 1000005;
@@ -12,14 +11,6 @@ using namespace std;
 int n, minv[MAXN], maxv[MAXN];
 LL wei[MAXN];
 map<LL, LL> dp_delta;
-
-void input_assertion() {
-	for (int i = 0; i < n; i++) {
-		assert(1 <= minv[i] && minv[i] <= maxv[i] && maxv[i] <= (int) 1e9);
-    	assert(1 <= wei[i] <= (int) 1e9);
-    	assert(1 <= n && n <= (int) 1e6);
-	}
-}
 
 int main() {
 	ios_base::sync_with_stdio(0); cin.tie(0);
@@ -40,7 +31,7 @@ int main() {
 		dp_delta[minv[i]] += wei[i];
 		
 		LL rem = wei[i];
-		auto it = dp_delta.upper_bound(maxv[i]);
+		auto it = dp_delta.lower_bound(maxv[i]);
 		while (rem > 0 && it != dp_delta.end()) {
 			if (rem >= it->second) {
 				rem -= it->second;
